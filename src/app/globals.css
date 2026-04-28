@@ -1,26 +1,89 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg-base: #0a0a0a;
+  --color-bg-surface: #141414;
+  --color-bg-elevated: #1e1e1e;
+  --color-olive: #5c7a3e;
+  --color-olive-dark: #3d5228;
+  --color-olive-light: #7a9e52;
+  --color-khaki: #8b7355;
+  --color-camo: #4a5c3a;
+  --color-amber: #c49a3c;
+  --color-text: #f0ece4;
+  --color-text-muted: #9a8f80;
+  --color-border: #2a2a2a;
+
+  --font-heading: var(--font-oswald);
+  --font-body: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg-base);
+  color: var(--color-text);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  overflow-x: clip;
+  min-width: 0;
 }
+
+/* Высота = основной ряд + вторая полоска (Каталог / Хиты / …), fixed-шапка перекрывала контент */
+@layer utilities {
+  .touch-pan-x {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Герой: базовый отступ под шапку + вырез экрана */
+  .pt-hero-safe {
+    padding-top: calc(7.5rem + env(safe-area-inset-top, 0px));
+  }
+
+  @media (min-width: 768px) {
+    .pt-hero-safe {
+      padding-top: calc(8rem + env(safe-area-inset-top, 0px));
+    }
+  }
+
+  .page-content-top {
+    padding-top: calc(11.5rem + env(safe-area-inset-top, 0px));
+  }
+  @media (min-width: 640px) {
+    .page-content-top {
+      padding-top: calc(11rem + env(safe-area-inset-top, 0px));
+    }
+  }
+  @media (min-width: 1024px) {
+    .page-content-top {
+      padding-top: calc(10.25rem + env(safe-area-inset-top, 0px));
+    }
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #3d5228;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5c7a3e;
+}
+
+/* Camo texture overlay utility */
+.camo-overlay {
+  background-image:
+    radial-gradient(ellipse at 20% 40%, rgba(74, 92, 58, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 60%, rgba(61, 82, 40, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(139, 115, 85, 0.08) 0%, transparent 40%);
+}
+
